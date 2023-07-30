@@ -33,6 +33,8 @@ cancelar.addEventListener("click", () => {
   limpiarFormulario();
 });
 
+
+
 function restarPrecioEliminado(precio) {
   // Verificar si el precio eliminado es igual al total actual,
   // en ese caso, establecer el total a 0
