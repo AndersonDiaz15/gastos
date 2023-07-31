@@ -110,8 +110,8 @@ function agregarGasto(descripcion, precio) {
     </div>
     <p class="fecha">${getFechaLocalizada()}</p>
     <div class="items">
-      <img class="editar" src="/Proyecto/Imagenes/icons8-crear-nuevo-26.png" alt="">
-      <img class="eliminar" src="/Proyecto/Imagenes/icons8-eliminar-26.png" alt="">
+      <img class="editar" src="./Imagenes/icons8-crear-nuevo-26.png" alt="">
+      <img class="eliminar" src="./Imagenes/icons8-eliminar-26.png" alt="">
     </div>
   `;
   nuevaCaja.style.display = "flex";
