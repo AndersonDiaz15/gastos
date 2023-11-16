@@ -9,6 +9,7 @@ body{
     flex-direction: column;
     min-height: 100vh;
     background-color: #000000;
+    
     font-family: 'Montserrat', sans-serif;
 }
 header {
@@ -165,9 +166,15 @@ button:hover{
 
 
 footer {
-   
+    
     padding: 10px;
     text-align: center; 
+    color: #fff;
+    
+}
+
+footer p{
+    text-align: left;
 }
 #añadir{
     cursor: pointer;
