@@ -11,13 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Descargar tu repo
+      # 1) Descargar tu repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Instalar Node + Cypress y correr pruebas
-      - name: Run Cypress Tests
-        uses: cypress-io/github-action@v6
+      # 2) Instalar Node y Cypress
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          browser: chrome # Ejecuta en Chrome headless
-          start: npm start # Solo si tu proyecto necesita levantar un servidor local
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 3) Ejecutar Cypress apuntando a tu URL de Netlify
+      - name: Run Cypress Tests
+        run: |
+          npx cypress run --browser chrome
