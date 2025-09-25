@@ -1,44 +1,45 @@
 name: CI - Cypress Flexible
 
+# Eventos que disparan el workflow
 on:
   push:
-    branches: ["main", "develop"]
+    branches: ["main", "develop", "feature/*"] # cualquier push a estas ramas
   pull_request:
-    branches: ["main", "develop"]
+    branches: ["main", "develop"] # PR hacia main o develop
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
+    # Variable por defecto: todos los tests
     env:
-      CYPRESS_SPEC: "cypress/e2e/**/*.cy.js" # Valor por defecto: todos los tests
+      CYPRESS_SPEC: "cypress/e2e/**/*.cy.js"
 
     steps:
-      # 1) Descargar el repositorio
+      # 1️⃣ Descargar el repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Instalar Node 18
+      # 2️⃣ Instalar Node 18
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # 3) Instalar dependencias
+      # 3️⃣ Instalar dependencias del proyecto
       - name: Install dependencies
         run: npm ci
 
-      # 4) Ejecutar Cypress usando el Action oficial
+      # 4️⃣ Ejecutar Cypress usando el Action oficial
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          spec:
-            ${{ env.CYPRESS_SPEC }}
+          spec: ${{ env.CYPRESS_SPEC }}
 
-            # 5️⃣ Subir archivos vía FTP solo si Cypress pasó
+      # 5️⃣ Subir archivos vía FTP solo si Cypress pasó
       - name: Deploy to InfinityFree via FTP
-        if: success() # Solo corre si los tests pasaron
+        if: success() # corre solo si los tests pasaron
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.FTP_HOST }}
