@@ -33,4 +33,16 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          spec: ${{ env.CYPRESS_SPEC }}
+          spec:
+            ${{ env.CYPRESS_SPEC }}
+
+            # 5️⃣ Subir archivos vía FTP solo si Cypress pasó
+      - name: Deploy to InfinityFree via FTP
+        if: success() # Solo corre si los tests pasaron
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./ # Carpeta local a subir
+          server-dir: /htdocs/ # Carpeta remota en InfinityFree
