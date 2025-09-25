@@ -2,9 +2,9 @@ name: CI - Cypress Tests
 
 on:
   push:
-    branches: ["main"] # Se ejecuta cuando haces push a main
+    branches: ["main"]
   pull_request:
-    branches: ["main"] # Se ejecuta en PR hacia main
+    branches: ["main"]
 
 jobs:
   cypress-run:
@@ -15,16 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Configurar Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # 2) Instalar Node + Cypress y correr pruebas
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
         with:
-          node-version: 18
-
-      # 3) Instalar dependencias
-      - name: Install dependencies
-        run: npm ci
-
-      # 4) Ejecutar Cypress
-      - name: Run Cypress tests
-        run: npx cypress run
+          browser: chrome # Ejecuta en Chrome headless
+          start: npm start # Solo si tu proyecto necesita levantar un servidor local
