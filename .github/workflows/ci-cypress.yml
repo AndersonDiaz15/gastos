@@ -1,4 +1,4 @@
-name: CI - Cypress Tests (específico)
+name: CI - Cypress Flexible
 
 on:
   push:
@@ -10,13 +10,16 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
+    env:
+      CYPRESS_SPEC: "cypress/e2e/**/*.cy.js" # Valor por defecto: todos los tests
+
     steps:
       # 1) Descargar el repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Configurar Node.js
-      - name: Setup Node.js
+      # 2) Instalar Node 18
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -25,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4) Ejecutar solo un test específico
-      - name: Run specific Cypress test
-        run: npx cypress run --browser chrome --spec "cypress/e2e/prueba.cy.js"
+      # 4) Ejecutar Cypress usando el Action oficial
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          spec: ${{ env.CYPRESS_SPEC }}
