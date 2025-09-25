@@ -15,16 +15,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Instalar Node y Cypress
+      # 2) Instalar Node 18
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # 3) Instalar dependencias del proyecto
       - name: Install dependencies
         run: npm ci
 
-      # 3) Ejecutar Cypress apuntando a tu URL de Netlify
+      # 4) Ejecutar Cypress usando el action oficial
       - name: Run Cypress Tests
-        run: |
-          npx cypress run --browser chrome
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome # ejecuta en Chrome headless
