@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./Imagenes/icons8-gastos-22.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Montserrat&family=Poppins&family=Quicksand:wght@500&family=Roboto:wght@100&display=swap" rel="stylesheet">
+    
+    <title>App de gastos</title>
+</head>
+<body>
+
+    <header>
+        <p>Has gastado</p>
+        <h2>total:</h2>
+    </header>
+
+    <main>
+     
+
+        <div class="historial" id="historial">
+            <h2>Gastos </h2>
+            <div class="caja">
+              <div class="container"></div>
+              <div class="items">
+                <img id="editar" src="./Imagenes/icons8-crear-nuevo-26.png" alt="">
+                <img id="eliminar" src="./Imagenes/icons8-eliminar-26.png" alt="">
+              </div>
+              <div class="fecha"></div>
+              
+            </div>
+        </div>
+
+     <div class="formulario" id="formulario">
+        <h2>Agregar Gasto</h2>
+    
+        <p>Descripcion:</p>
+        <input type="text" name="descripcion" placeholder="pizza" autocomplete="off" >
+        <span class="error" id="descripcion-error"></span>
+    
+        <p>Precio:</p>
+        <input type="number" name="precio" placeholder="0.00" autocomplete="off">
+        <span class="error" id="precio-error" ></span>
+    
+        <button type="button" id="agregarGasto">Agregar Gasto</button>
+
+    </div>
+    </main>
+
+    <footer>
+       <img id="añadir"   src="./Imagenes/icons8-añadir-50.png"alt="">
+       <img id="cancelar" src="./Imagenes/icons8-cancelar-50.png" alt="">
+       <p>&copy; Anderson Diaz</p>
+        
+       
+    </footer>
+    
+    <script src="index.js"></script>
+</body>
+</html>
