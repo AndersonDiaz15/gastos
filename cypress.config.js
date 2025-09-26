@@ -5,7 +5,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // Eventos si necesitas en un futuro
     },
-    baseUrl: "http://paginas-pruebas.lovestoblog.com/",
+    baseUrl: "https://pagina-prueba-gastos-12345.netlify.app/",
     video: true,
   },
 });
