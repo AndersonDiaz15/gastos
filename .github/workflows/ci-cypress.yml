@@ -38,20 +38,20 @@ jobs:
           spec: ${{ env.CYPRESS_SPEC }}
 
       # Guardar videos si falla Cypress
-      - name: Upload Cypress videos
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-videos
-          path: cypress/videos
+      # - name: Upload Cypress videos
+      #   if: failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #    name: cypress-videos
+      #     path: cypress/videos
 
       # Guardar screenshots si falla Cypress
-      - name: Upload Cypress screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+      #  - name: Upload Cypress screenshots
+      #    if: failure()
+      #    uses: actions/upload-artifact@v4
+      #    with:
+      #      name: cypress-screenshots
+      #      path: cypress/screenshots
 
       # Subir archivos vía FTP solo si Cypress pasó
       - name: Deploy to InfinityFree via FTP
