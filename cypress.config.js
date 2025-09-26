@@ -6,6 +6,6 @@ module.exports = defineConfig({
       // Eventos si necesitas en un futuro
     },
     baseUrl: "https://pagina-prueba-gastos-12345.netlify.app/",
-    video: true,
+    //video: true,
   },
 });

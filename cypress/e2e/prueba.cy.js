@@ -28,7 +28,7 @@ describe("Pruebas de la página de gastos", () => {
 
     // Verifica que aparece la caja con el gasto
     cy.get(".caja").should("exist").and("be.visible");
-    cy.get(".caja p").should("contain", "Cafe tostado");
+    cy.get(".caja p").should("contain", "Cafe tostao");
     cy.get(".caja h2").should("contain", "5000");
   });
 });
