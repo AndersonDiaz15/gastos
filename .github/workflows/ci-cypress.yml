@@ -35,7 +35,16 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          spec: ${{ env.CYPRESS_SPEC }}
+          spec:
+            ${{ env.CYPRESS_SPEC }}
+
+      # Guardar screenshots si falla Cypress
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+        name: cypress-screenshots
+        path: cypress/screenshots   
 
       # Subir archivos vía FTP solo si Cypress pasó
       - name: Deploy to InfinityFree via FTP
