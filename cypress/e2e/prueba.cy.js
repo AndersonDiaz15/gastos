@@ -13,13 +13,6 @@ describe("Pruebas de la página de gastos", () => {
   it("Agrega un gasto y actualiza el total", () => {
     cy.visit("/");
 
-    // Abrir formulario
-    cy.get("#añadir").click();
-
-    // Llenar inputs
-    cy.get('input[name="descripcion"]').type("Cafe tostao");
-    cy.get('input[name="precio"]').type("5000");
-
     // Click en agregar
     cy.get("#agregarGasto").click();
 
