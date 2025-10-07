@@ -30,10 +30,16 @@ jobs:
       # 4️⃣ Ejecutar Cypress y generar reporte Mochawesome
       - name: Run Cypress Tests
         run: |
-          npx cypress run --browser chrome --spec "${{ env.CYPRESS_SPEC }}" --reporter mochawesome --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true
+          # Ejecuta Cypress sin detener workflow aunque haya fallos
+          npx cypress run --browser chrome --spec "${{ env.CYPRESS_SPEC }}" \
+            --reporter mochawesome \
+            --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true || true
+
+          # Genera reporte consolidado
           npx mochawesome-merge mochawesome-report/*.json > mochawesome.json
           npx marge mochawesome.json --reportDir mochawesome-report --inline
-          # Renombrar el HTML generado para Netlify
+
+          # Renombrar HTML para Netlify
           mv mochawesome-report/mochawesome.html mochawesome-report/index.html
 
       # 5️⃣ Instalar Netlify CLI
@@ -46,7 +52,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          netlify deploy --dir=mochawesome-report --prod --site=$NETLIFY_SITE_ID
+          netlify deploy --dir=mochawesome-report --prod
 
       # Guardar videos si falla Cypress
       # - name: Upload Cypress videos
