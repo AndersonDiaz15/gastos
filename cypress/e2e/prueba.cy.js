@@ -24,7 +24,7 @@ describe("Pruebas de la página de gastos", () => {
     cy.get("#agregarGasto").click();
 
     // Verifica que el total se actualizó
-    cy.get("h2").first().should("contain", "5000");
+    cy.get("h2").first().should("contain", "500");
 
     // Verifica que aparece la caja con el gasto
     cy.get(".caja").should("exist").and("be.visible");

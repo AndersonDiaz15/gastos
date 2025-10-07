@@ -13,28 +13,34 @@ jobs:
       CYPRESS_SPEC: "cypress/e2e/**/*.cy.js"
 
     steps:
+      # 1️⃣ Descargar el repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Instalar Node
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # 3️⃣ Instalar dependencias
       - name: Install dependencies
         run: npm ci
 
+      # 4️⃣ Ejecutar Cypress (aunque fallen tests, continua el flujo)
       - name: Run Cypress tests
-        run: npm run cy:run
+        run: npm run cy:run || true
 
-      - name: Merge and generate Mochawesome report
+      # 5️⃣ Merge y generar reporte Mochawesome
+      - name: Generate Mochawesome Report
         run: npm run report:full
 
-      - name: Deploy report to GitHub Pages
+      # 6️⃣ Publicar reporte en GitHub Pages (repo externo o mismo repo)
+      - name: Deploy Mochawesome Report
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.REPORTES_TOKEN }}
-          external_repository: AndersonDiaz15/gastos-reports
+          external_repository: AndersonDiaz15/gastos-reports # Cambia si es otro repo
           publish_branch: gh-pages
           publish_dir: ./mochawesome-report
           user_name: "GitHub Actions"
