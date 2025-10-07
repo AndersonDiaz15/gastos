@@ -66,9 +66,10 @@ jobs:
           to: ${{ secrets.EMAIL_TO }}
           from: "CI GitHub Actions <${{ secrets.EMAIL_USER }}>"
           body: |
+
             Hola,
 
-             REPORTE DE EJECUCIÓN DE PRUEBAS CYPRESS
+            REPORTE DE EJECUCIÓN DE PRUEBAS CYPRESS
 
             **Repositorio:** ${{ github.repository }}
             **Rama:** ${{ github.ref_name }}
