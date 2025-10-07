@@ -54,29 +54,54 @@ jobs:
         run: |
           netlify deploy --dir=mochawesome-report --prod
 
-      # Guardar videos si falla Cypress
-      # - name: Upload Cypress videos
-      #   if: failure()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #    name: cypress-videos
-      #     path: cypress/videos
+      # 7️⃣ Enviar el link por correo
+      - name: Send Netlify Report Link
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASS }}
+          subject: "📊 Reporte Cypress - ${{ github.repository }} #${{ github.run_number }}"
+          to: ${{ secrets.EMAIL_TO }}
+          from: "CI GitHub Actions <${{ secrets.EMAIL_USER }}>"
 
-      # Guardar screenshots si falla Cypress
-      #  - name: Upload Cypress screenshots
-      #    if: failure()
-      #    uses: actions/upload-artifact@v4
-      #    with:
-      #      name: cypress-screenshots
-      #      path: cypress/screenshots
+          body: |
+             Hola,
 
-      # Subir archivos vía FTP solo si Cypress pasó
-      # - name: Deploy to InfinityFree via FTP
-      #   if: success() # corre solo si los tests pasaron
-      #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      #   with:
-      #     server: ${{ secrets.FTP_HOST }}
-      #     username: ${{ secrets.FTP_USER }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     local-dir: ./ # Carpeta local a subir
-      #     server-dir: /htdocs/ # Carpeta remota en InfinityFree
+            El reporte de pruebas Cypress se ha desplegado en Netlify.
+
+            **Repositorio:** ${{ github.repository }}
+            **Rama:** ${{ github.ref_name }}
+            **Commit:** ${{ github.event.head_commit.message }}
+            **Resultado de las pruebas:** ${{ job.status }}
+
+            Accede al reporte aquí: https://gastos-reportes.netlify.app
+            ¡Saludos!
+
+    # Guardar videos si falla Cypress
+    # - name: Upload Cypress videos
+    #   if: failure()
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #    name: cypress-videos
+    #     path: cypress/videos
+
+    # Guardar screenshots si falla Cypress
+    #  - name: Upload Cypress screenshots
+    #    if: failure()
+    #    uses: actions/upload-artifact@v4
+    #    with:
+    #      name: cypress-screenshots
+    #      path: cypress/screenshots
+
+    # Subir archivos vía FTP solo si Cypress pasó
+    # - name: Deploy to InfinityFree via FTP
+    #   if: success() # corre solo si los tests pasaron
+    #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
+    #   with:
+    #     server: ${{ secrets.FTP_HOST }}
+    #     username: ${{ secrets.FTP_USER }}
+    #     password: ${{ secrets.FTP_PASSWORD }}
+    #     local-dir: ./ # Carpeta local a subir
+    #     server-dir: /htdocs/ # Carpeta remota en InfinityFree
