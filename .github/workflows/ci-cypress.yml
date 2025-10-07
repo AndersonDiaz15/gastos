@@ -7,12 +7,10 @@ on:
     branches: ["main"]
 
 jobs:
-  cypress-netlify:
+  cypress-run:
     runs-on: ubuntu-latest
     env:
       CYPRESS_SPEC: "cypress/e2e/**/*.cy.js"
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     steps:
       # 1️⃣ Descargar el repositorio
@@ -29,34 +27,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣ Instalar Mochawesome y herramientas relacionadas
-      - name: Install Mochawesome tools
+      # 4️⃣ Ejecutar Cypress y generar reporte Mochawesome
+      - name: Run Cypress Tests
         run: |
-          npm install mochawesome mochawesome-merge mochawesome-report-generator --save-dev
-
-      # 5️⃣ Ejecutar Cypress y generar reporte Mochawesome
-      - name: Run Cypress tests and generate report
-        run: |
-          # Ejecuta tests y genera JSON
           npx cypress run --browser chrome --spec "${{ env.CYPRESS_SPEC }}" --reporter mochawesome --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true
+          npx mochawesome-merge mochawesome-report/*.json > mochawesome.json
+          npx marge mochawesome.json --reportDir mochawesome-report --inline
+          # Renombrar el HTML generado para Netlify
+          mv mochawesome-report/mochawesome.html mochawesome-report/index.html
 
-          # Merge JSONs en un solo archivo
-          npx mochawesome-merge mochawesome-report/*.json > mochawesome-report/output.json
-
-          # Genera HTML a partir del JSON
-          npx marge mochawesome-report/output.json --reportDir mochawesome-report --reportTitle "Reporte Cypress"
-
-      # 6️⃣ Asegurarse de que el HTML principal se llame index.html
-      - name: Rename main report to index.html
-        run: mv mochawesome-report/mochawesome.html mochawesome-report/index.html || true
-
-      # 7️⃣ Instalar Netlify CLI
+      # 5️⃣ Instalar Netlify CLI
       - name: Install Netlify CLI
         run: npm install netlify-cli -g
 
-      # 8️⃣ Desplegar en Netlify
+      # 6️⃣ Desplegar en Netlify
       - name: Deploy to Netlify
-        run: netlify deploy --dir=mochawesome-report --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          netlify deploy --dir=mochawesome-report --prod --site=$NETLIFY_SITE_ID
 
       # Guardar videos si falla Cypress
       # - name: Upload Cypress videos
