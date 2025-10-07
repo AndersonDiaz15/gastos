@@ -46,9 +46,10 @@ jobs:
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.REPORTES_TOKEN }} # tu token personal
+          personal_token: ${{ secrets.REPORTES_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./allure-report
+          external_repository: AndersonDiaz15/gastos-reports
           user_name: "GitHub Actions"
           user_email: "actions@github.com"
           commit_message: "🚀 Publicación automática del reporte Allure"
