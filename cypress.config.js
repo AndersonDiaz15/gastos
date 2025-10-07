@@ -1,12 +1,14 @@
 import { defineConfig } from "cypress";
-import allureWriter from "@shelex/cypress-allure-plugin/writer.js";
 
 module.exports = defineConfig({
+  reporter: "mochawesome",
+  reporterOptions: {
+    reportDir: "mochawesome-report", // Carpeta donde se guardarán los reportes
+    overwrite: false,
+    html: false, // Genera JSON (lo convertiremos luego a HTML)
+    json: true,
+  },
   e2e: {
-    setupNodeEvents(on, config) {
-      allureWriter(on, config);
-      return config;
-    },
     baseUrl: "https://pagina-prueba-gastos-12345.netlify.app/",
   },
 });
