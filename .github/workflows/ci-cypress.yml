@@ -66,16 +66,15 @@ jobs:
           to: ${{ secrets.EMAIL_TO }}
           from: "CI GitHub Actions <${{ secrets.EMAIL_USER }}>"
           body: |
-            🚀 Hola,
+            Hola,
 
-            El reporte de pruebas Cypress se ha desplegado en Netlify.
-
-            **Repositorio:** ${{ github.repository }}
-            **Rama:** ${{ github.ref_name }}
-            **Commit:** ${{ github.event.head_commit.message }}
-            **Resultado de las pruebas:** ${{ job.status }}
-
-            Accede al reporte aquí: https://gastos-reportes.netlify.app
+            <p>🚀 <strong>Resultados de la ejecución de pruebas Cypress</strong></p>
+            <p><strong>Repositorio:</strong> ${{ github.repository }}</p>
+            <p><strong>Rama:</strong> ${{ github.ref_name }}</p>
+            <p><strong>Commit:</strong> ${{ github.event.head_commit.message }}</p>
+            <p><strong>Autor:</strong> ${{ github.event.head_commit.author.name }}</p>
+            <p><strong>Estado:</strong> ${{ job.status }}</p>
+            <p>El reporte está disponible en: <a href="https://gastos-reportes.netlify.app">https://gastos-reportes.netlify.app</a></p>
             ¡Saludos!
 
     # Guardar videos si falla Cypress
