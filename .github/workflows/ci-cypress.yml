@@ -68,14 +68,18 @@ jobs:
           body: |
             Hola,
 
-            <p>🚀 <strong>Resultados de la ejecución de pruebas Cypress</strong></p>
-            <p><strong>Repositorio:</strong> ${{ github.repository }}</p>
-            <p><strong>Rama:</strong> ${{ github.ref_name }}</p>
-            <p><strong>Commit:</strong> ${{ github.event.head_commit.message }}</p>
-            <p><strong>Autor:</strong> ${{ github.event.head_commit.author.name }}</p>
-            <p><strong>Estado:</strong> ${{ job.status }}</p>
-            <p>El reporte está disponible en: <a href="https://gastos-reportes.netlify.app">https://gastos-reportes.netlify.app</a></p>
-            ¡Saludos!
+            REPORTES DE EJECUCIÓN DE PRUEBAS CYPRESS
+
+          Repositorio: ${{ github.repository }}
+          Rama: ${{ github.ref_name }}
+          Commit: ${{ github.event.head_commit.message }}
+          Autor: ${{ github.event.head_commit.author.name }}
+          Estado: ${{ job.status | upper }}
+
+          El reporte completo está disponible en: https://gastos-reportes.netlify.app
+
+          Saludos,
+          Equipo de QA
 
     # Guardar videos si falla Cypress
     # - name: Upload Cypress videos
