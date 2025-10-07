@@ -68,7 +68,7 @@ jobs:
           body: |
             Hola,
 
-            REPORTES DE EJECUCIÓN DE PRUEBAS CYPRESS
+             REPORTE DE EJECUCIÓN DE PRUEBAS CYPRESS
 
           Repositorio: ${{ github.repository }}
           Rama: ${{ github.ref_name }}
@@ -76,9 +76,10 @@ jobs:
           Autor: ${{ github.event.head_commit.author.name }}
           Estado: ${{ job.status | upper }}
 
-          El reporte completo está disponible en: https://gastos-reportes.netlify.app
+          El reporte completo está disponible en:
+          https://gastos-reportes.netlify.app
 
-          Saludos,
+          ¡Saludos!
           Equipo de QA
 
     # Guardar videos si falla Cypress
