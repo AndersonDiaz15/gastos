@@ -65,9 +65,8 @@ jobs:
           subject: "📊 Reporte Cypress - ${{ github.repository }} #${{ github.run_number }}"
           to: ${{ secrets.EMAIL_TO }}
           from: "CI GitHub Actions <${{ secrets.EMAIL_USER }}>"
-
           body: |
-             Hola,
+            🚀 Hola,
 
             El reporte de pruebas Cypress se ha desplegado en Netlify.
 
