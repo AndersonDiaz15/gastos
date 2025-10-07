@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cy:run": "cypress run",
-    "cy:report:generate": "npx allure generate allure-results --clean -o allure-report",
-    "cy:report:open": "npx allure open allure-report"
+    "cy:report:generate": "allure generate allure-results --clean -o allure-report",
+    "cy:report:open": "allure open allure-report"
   },
   "keywords": [],
   "author": "",
