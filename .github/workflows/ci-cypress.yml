@@ -2,15 +2,14 @@ name: CI - Cypress Flexible
 
 on:
   push:
-    branches: ["main"] # Ejecuta en push a main
+    branches: ["main"]
   pull_request:
-    branches: ["main"] # Ejecuta en PR hacia main
+    branches: ["main"]
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
-    # Variable por defecto: todos los tests
     env:
       CYPRESS_SPEC: "cypress/e2e/**/*.cy.js"
 
@@ -19,7 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Instalar Node 18
+      # 2️⃣ Instalar Node 20
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -28,20 +27,24 @@ jobs:
       # 3️⃣ Instalar dependencias del proyecto
       - name: Install dependencies
         run: npm ci
-      - name: Instalar plugin Allure
-        run: npm install @shelex/cypress-allure-plugin --save-dev
 
-      # 4️⃣ Ejecutar Cypress y generar resultados para Allure
+      # 4️⃣ Instalar plugin Allure y CLI
+      - name: Instalar Allure Plugin y CLI
+        run: |
+          npm install @shelex/cypress-allure-plugin --save-dev
+          npm install -g allure-commandline --save-dev
+
+      # 5️⃣ Ejecutar Cypress y generar resultados para Allure
       - name: Run Cypress Tests with Allure
         run: |
           npx cypress run --browser chrome --spec "${{ env.CYPRESS_SPEC }}"
           npx allure generate allure-results --clean -o allure-report
 
-      # 5️⃣ Comprimir el reporte en un ZIP
+      # 6️⃣ Comprimir el reporte en un ZIP
       - name: Zip Allure Report
         run: zip -r allure-report.zip allure-report
 
-      # 6️⃣ Enviar el reporte por correo con el ZIP adjunto
+      # 7️⃣ Enviar el reporte por correo con el ZIP adjunto
       - name: Send Allure Report by Email
         uses: dawidd6/action-send-mail@v3
         with:
