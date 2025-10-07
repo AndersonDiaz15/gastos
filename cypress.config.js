@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 import allureWriter from "@shelex/cypress-allure-plugin/writer.js";
 
 module.exports = defineConfig({
-  reporter: "allure-mocha",
+  reporter: "mocha", // ✅ cambia esto
   reporterOptions: {
     resultsDir: "allure-results",
   },
@@ -12,6 +12,5 @@ module.exports = defineConfig({
       return config;
     },
     baseUrl: "https://pagina-prueba-gastos-12345.netlify.app/",
-    //video: true,
   },
 });
