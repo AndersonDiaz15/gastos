@@ -71,12 +71,12 @@ jobs:
 
             REPORTE DE EJECUCIÓN DE PRUEBAS CYPRESS
 
-            **Repositorio:** ${{ github.repository }}
-            **Rama:** ${{ github.ref_name }}
-            **Commit:** ${{ github.event.head_commit.message }}
-            **Autor:** ${{ github.event.head_commit.author.name }}
-            **Estado:** ${{ job.status }} 
-            **Bold Text**
+            Repositorio: ${{ github.repository }}
+            Rama: ${{ github.ref_name }}
+            Commit: ${{ github.event.head_commit.message }}
+            Autor: ${{ github.event.head_commit.author.name }}
+            Estado: ${{ job.status }} 
+
 
             El reporte completo está disponible en:
             https://gastos-reportes.netlify.app

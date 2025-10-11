@@ -1,0 +1,32 @@
+site_name: Mi Documentación de Prueba
+site_description: Prueba de despliegue de MkDocs Material en Vercel
+site_author: Tu Nombre
+
+theme:
+  name: material
+  logo: assets/logo.png
+  favicon: assets/favicon.png
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/weather-sunny
+        name: Cambiar tema
+  features:
+    - navigation.top
+    - content.code.copy
+    - content.tooltips
+
+nav:
+  - Inicio: index.md
+  - Acerca de: about.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - attr_list
