@@ -42,22 +42,21 @@ jobs:
           # Renombrar HTML para Netlify
           mv mochawesome-report/mochawesome.html mochawesome-report/index.html
 
-            # 5️⃣ Instalar Netlify CLI
+      # 5️⃣ Instalar Netlify CLI
       - name: Install Netlify CLI
         run: npm install netlify-cli -g
 
-      # 6️⃣ Desplegar en Netlify (Draft)
-      - name: Deploy to Netlify Draft
-        id: deploy
+      # 6️⃣ Desplegar en Netlify
+      - name: Deploy to Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          #NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
           # Ejecuta draft deploy y captura la URL
-          DEPLOY_URL=$(netlify deploy --dir=mochawesome-report --draft --json --silent | jq -r '.url')
-
+          DEPLOY_URL=$(netlify deploy --dir=mochawesome-report --draft --json | jq -r '.url')
           echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
-      # 7️⃣ Enviar el link por correo usando la URL del draft
+      # 7️⃣ Enviar el link por correo
       - name: Send Netlify Report Link
         uses: dawidd6/action-send-mail@v3
         with:
@@ -68,8 +67,8 @@ jobs:
           subject: "📊 Reporte Cypress - ${{ github.repository }} #${{ github.run_number }}"
           to: ${{ secrets.EMAIL_TO }}
           from: "CI GitHub Actions <${{ secrets.EMAIL_USER }}>"
-
           body: |
+
             Hola,
 
             REPORTE DE EJECUCIÓN DE PRUEBAS CYPRESS
@@ -79,6 +78,7 @@ jobs:
             Commit: ${{ github.event.head_commit.message }}
             Autor: ${{ github.event.head_commit.author.name }}
             Estado: ${{ job.status }} 
+
 
             El reporte completo está disponible en:
             ${{ steps.deploy.outputs.deploy_url }}
