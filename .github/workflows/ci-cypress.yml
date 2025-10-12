@@ -53,7 +53,8 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
           # Ejecuta draft deploy y captura la URL
-          DEPLOY_URL=$(netlify deploy --dir=mochawesome-report --draft --json | jq -r '.url')
+          DEPLOY_URL=$(netlify deploy --dir=mochawesome-report --draft --json --silent | jq -r '.url')
+
           echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
       # 7️⃣ Enviar el link por correo usando la URL del draft
