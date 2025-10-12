@@ -8,8 +8,7 @@
     "cy:run": "cypress run --reporter mochawesome --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true",
     "merge-reports": "mochawesome-merge mochawesome-report/*.json > mochawesome.json",
     "generate-report": "marge mochawesome.json -f index.html -o mochawesome-report",
-    "report:full": "npm run merge-reports && npm run generate-report",
-    "vercel-build": "pip install mkdocs-material && mkdocs build"
+    "report:full": "npm run merge-reports && npm run generate-report"
   },
   "keywords": [],
   "author": "",
