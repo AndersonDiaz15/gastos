@@ -54,7 +54,7 @@ jobs:
           #NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
           # Ejecuta draft deploy y captura la URL
-          DEPLOY_URL=$(netlify deploy --dir=mochawesome-report --draft | grep "Website Draft URL" | awk '{print $NF}')
+          DEPLOY_URL=$(node -p "JSON.parse(require('child_process').execSync('netlify deploy --dir=mochawesome-report --draft --json').toString()).url")
 
           echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
