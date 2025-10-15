@@ -48,15 +48,11 @@ jobs:
 
       # 6️⃣ Desplegar en Netlify
       - name: Deploy to Netlify
-        id: deploy
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          #NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          # Ejecuta draft deploy y captura la URL
-          DEPLOY_URL=$(node -p "JSON.parse(require('child_process').execSync('netlify deploy --dir=mochawesome-report --draft --json').toString()).url")
-
-          echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          netlify deploy --dir=mochawesome-report --prod
 
       # 7️⃣ Enviar el link por correo
       - name: Send Netlify Report Link
@@ -83,7 +79,7 @@ jobs:
 
 
             El reporte completo está disponible en:
-            ${{ steps.deploy.outputs.deploy_url }}
+            https://gastos-reportes.netlify.app
 
             ¡Saludos!
 
