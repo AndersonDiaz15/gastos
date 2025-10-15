@@ -77,7 +77,6 @@ jobs:
             Autor: ${{ github.event.head_commit.author.name }}
             Estado: ${{ job.status }} 
 
-
             El reporte completo está disponible en:
             https://voluble-marzipan-668a01.netlify.app/
 
