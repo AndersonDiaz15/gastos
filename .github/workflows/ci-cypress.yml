@@ -1,4 +1,4 @@
-name: CI - Cypress + Mochawesome + Netlify
+name: CI - Cypress + Mochawesome + GitHub Pages
 
 on:
   push:
@@ -30,32 +30,32 @@ jobs:
       # 4️⃣ Ejecutar Cypress y generar reporte Mochawesome
       - name: Run Cypress Tests
         run: |
-          # Ejecuta Cypress sin detener workflow aunque haya fallos
           npx cypress run --browser chrome --spec "${{ env.CYPRESS_SPEC }}" \
             --reporter mochawesome \
             --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true || true
 
-          # Genera reporte consolidado
           npx mochawesome-merge mochawesome-report/*.json > mochawesome.json
           npx marge mochawesome.json --reportDir mochawesome-report --inline
 
-          # Renombrar HTML para Netlify
           mv mochawesome-report/mochawesome.html mochawesome-report/index.html
 
-      # 5️⃣ Instalar Netlify CLI
-      - name: Install Netlify CLI
-        run: npm install netlify-cli -g
-
-      # 6️⃣ Desplegar en Netlify
-      - name: Deploy to Netlify
+      # 5️⃣ Publicar el reporte en GitHub Pages (en el repo de reportes)
+      - name: Deploy report to GitHub Pages repo
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          GH_TOKEN_REPORTES: ${{ secrets.GH_TOKEN }}
         run: |
-          netlify deploy --dir=mochawesome-report --prod
+          cd mochawesome-report
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "📊 Nuevo reporte de Cypress - ${{ github.run_number }}"
+          git branch -M main
+          git remote add origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/TU_USUARIO/TU_REPO_REPORTES.git
+          git push -f origin main
 
-      # 7️⃣ Enviar el link por correo
-      - name: Send Netlify Report Link
+      # 6️⃣ Enviar el link por correo
+      - name: Send GitHub Pages Link
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -66,7 +66,6 @@ jobs:
           to: ${{ secrets.EMAIL_TO }}
           from: "CI GitHub Actions <${{ secrets.EMAIL_USER }}>"
           body: |
-
             Hola,
 
             REPORTE DE EJECUCIÓN DE PRUEBAS CYPRESS
@@ -75,10 +74,10 @@ jobs:
             Rama: ${{ github.ref_name }}
             Commit: ${{ github.event.head_commit.message }}
             Autor: ${{ github.event.head_commit.author.name }}
-            Estado: ${{ job.status }} 
+            Estado: ${{ job.status }}
 
             El reporte completo está disponible en:
-            https://voluble-marzipan-668a01.netlify.app/
+            https://github.com/AndersonDiaz15/reportes-cypresss
 
             ¡Saludos!
 
