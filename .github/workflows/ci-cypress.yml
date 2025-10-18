@@ -51,7 +51,7 @@ jobs:
           git add .
           git commit -m "📊 Nuevo reporte de Cypress - ${{ github.run_number }}"
           git branch -M main
-          git remote add origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/TU_USUARIO/TU_REPO_REPORTES.git
+          git remote add origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/AndersonDiaz15/reportes-cypresss.git
           git push -f origin main
 
       # 6️⃣ Enviar el link por correo
@@ -77,7 +77,7 @@ jobs:
             Estado: ${{ job.status }}
 
             El reporte completo está disponible en:
-            https://github.com/AndersonDiaz15/reportes-cypresss
+            https://github.com/AndersonDiaz15/reportes-cypresss/
 
             ¡Saludos!
 
